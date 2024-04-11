@@ -2,17 +2,20 @@
 // Function 1 - Object Values ////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////
 
-function objectValues() {
-    // code
-  var values = { 
-    a:"blue",
-    b: "purple",
-    c:"red"
-};
-return values;
+function objectValues(object) {
+    if(!object) {
+        return [];
+    }
+    var result = Object.values(object);
+    return result;
 }
-var result = objectValues();
-console.log(Object.values(result));
+var object2 = {
+    a: "blue",
+     c: "orange",
+     d: "yellow"
+};
+var results = objectValues(object2);
+console.log(results);
 //////////////////////////////////////////////////////////////////////
 // Function 2 - Keys to String ///////////////////////////////////////
 //////////////////////////////////////////////////////////////////////
