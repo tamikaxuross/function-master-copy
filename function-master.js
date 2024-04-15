@@ -2,33 +2,41 @@
 // Function 1 - Object Values ////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////
 
-function objectValues(object) {
-    if(!object) {
-        return [];
+function objectValues(obj) {
+    let object = [];
+    for (let key in obj) {
+        if (Object.hasOwnProperty.call(obj, key)) {
+            object.push(obj[key]);
+        }
     }
-    var result = Object.values(object);
-    return result;
+    return object
+ 
 }
-var object2 = {
-    a: "blue",
-     c: "orange",
-     d: "yellow"
-};
-var results = objectValues(object2);
-console.log(results);
+//var result = objectValues();
+//console.log(Object.values(result));
 //////////////////////////////////////////////////////////////////////
 // Function 2 - Keys to String ///////////////////////////////////////
 //////////////////////////////////////////////////////////////////////
 
-function keysToString(object) {
+function keysToString(objects) {
+    let keysToString = "";
+    return Object.keys(objects).join(" ");
 
 }
 
 //////////////////////////////////////////////////////////////////////
 // Function 3 - Values to String /////////////////////////////////////
 //////////////////////////////////////////////////////////////////////
-
-function valuesToString(object) {
+//use filter 
+function valuesToString(objective) {
+    //get an array of all values in object
+    let allValues = Object.values(objective);
+    //filter array to get only string values 
+    let strings = allValues.filter(value => typeof value === 'string'); 
+    //join string values with the spaces
+    let allStrings = strings.join(' ');
+    //return joined string 
+    return allStrings; 
     
 }
 
@@ -133,7 +141,7 @@ function removeProperties(object, array) {
 //////////////////////////////////////////////////////////////////////
 
 function dedup(array) {
-    return its values in an array
+
 
 }
 
