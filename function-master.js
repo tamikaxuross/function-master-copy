@@ -2,15 +2,17 @@
 // Function 1 - Object Values ////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////
 
+const { isArray } = require("lodash");
+
 function objectValues(obj) {
-    let object = [];
-    for (let key in obj) {
-        if (Object.hasOwnProperty.call(obj, key)) {
-            object.push(obj[key]);
-        }
+  let object = [];
+  for (let key in obj) {
+    if (Object.hasOwnProperty.call(obj, key)) {
+      object.push(obj[key]);
     }
-    return object
- 
+  }
+  return object
+
 }
 //var result = objectValues();
 //console.log(Object.values(result));
@@ -19,8 +21,8 @@ function objectValues(obj) {
 //////////////////////////////////////////////////////////////////////
 
 function keysToString(objects) {
-    let keysToString = "";
-    return Object.keys(objects).join(" ");
+  let keysToString = "";
+  return Object.keys(objects).join(" ");
 
 }
 
@@ -29,15 +31,15 @@ function keysToString(objects) {
 //////////////////////////////////////////////////////////////////////
 //use filter 
 function valuesToString(objective) {
-    //get an array of all values in object
-    let allValues = Object.values(objective);
-    //filter array to get only string values 
-    let strings = allValues.filter(value => typeof value === 'string'); 
-    //join string values with the spaces
-    let allStrings = strings.join(' ');
-    //return joined string 
-    return allStrings; 
-    
+  //get an array of all values in object
+  let allValues = Object.values(objective);
+  //filter array to get only string values 
+  let strings = allValues.filter(value => typeof value === 'string');
+  //join string values with the spaces
+  let allStrings = strings.join(' ');
+  //return joined string 
+  return allStrings;
+
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -45,7 +47,14 @@ function valuesToString(objective) {
 //////////////////////////////////////////////////////////////////////
 
 function arrayOrObject(collection) {
-    
+  if (Array.isArray(collection)) {
+    return 'array';
+  } else if (typeof collection === 'object' && collection !== null) {
+    return 'object';
+  } else {
+    return 'invalid';
+  }
+
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -53,7 +62,14 @@ function arrayOrObject(collection) {
 //////////////////////////////////////////////////////////////////////
 
 function capitalizeWord(string) {
-    
+  if (typeof string !== 'string') {
+    return 'Invalid';
+  }
+  if (string.length === 0) {
+    return 'empty';
+  }
+  const capitalizedString = string.charAt(0).toUpperCase() + string.slice(1);
+  return capitalizedString;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -61,22 +77,40 @@ function capitalizeWord(string) {
 //////////////////////////////////////////////////////////////////////
 
 function capitalizeAllWords(string) {
-    
-}
+  if (typeof string !== 'string') {
+    return 'invalid';
+  }
 
+  if (string.length === 0) {
+    return 'empty';
+  }
+  let wordsArray = string.split(' ');
+  let capitalizedWords = [];
+
+  for (let i = 0; i < wordsArray.length; i++) {
+    let word = wordsArray[i];
+    capitalizedWords.push(word.charAt(0).toUpperCase() + word.slice(1));
+  }
+
+  let capitalizedString = capitalizedWords.join(' ');
+
+  return capitalizedString;
+
+}
 //////////////////////////////////////////////////////////////////////
 // Function 7 - Welcome Message //////////////////////////////////////
 //////////////////////////////////////////////////////////////////////
 
 function welcomeMessage(object) {
+  return `Welcome ${object.name}!`;
 
 }
-
 //////////////////////////////////////////////////////////////////////
 // Function 8 - Profile Info /////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////
 
 function profileInfo(object) {
+  return `${capitalizeWord(object.name)} is a ${capitalizeWord(object.species)}`;
 
 }
 
@@ -85,6 +119,12 @@ function profileInfo(object) {
 //////////////////////////////////////////////////////////////////////
 
 function maybeNoises(object) {
+  if (object.noises && object.noises.length > 0) {
+    return object.noises.join(' ');
+  } else {
+    return 'there are no noises';
+  }
+
 
 }
 
@@ -93,6 +133,7 @@ function maybeNoises(object) {
 //////////////////////////////////////////////////////////////////////
 
 function hasWord(string, word) {
+  return string.split(' ').includes(word);
 
 }
 
@@ -100,7 +141,9 @@ function hasWord(string, word) {
 // Function 11 - Add Friend //////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////
 
-function addFriend (name, object) {
+function addFriend(name, object) {
+  object.friends.push(name);
+  return object;
 
 }
 
@@ -109,6 +152,7 @@ function addFriend (name, object) {
 //////////////////////////////////////////////////////////////////////
 
 function isFriend(name, object) {
+  return object.friends ? object.friends.includes(name) : false;
 
 }
 
@@ -117,6 +161,17 @@ function isFriend(name, object) {
 //////////////////////////////////////////////////////////////////////
 
 function nonFriends(name, array) {
+  let nonFriendsArray = [];
+
+  for (let i = 0; i < array.length; i++) {
+    const person = array[i];
+
+    if (person.name !== name && !person.friends.includes(name)) {
+      nonFriendsArray.push(person.name);
+    }
+  }
+
+  return nonFriendsArray;
 
 }
 
@@ -125,6 +180,8 @@ function nonFriends(name, array) {
 //////////////////////////////////////////////////////////////////////
 
 function updateObject(object, key, value) {
+  object[key] = value;
+  return object;
 
 }
 
@@ -133,6 +190,7 @@ function updateObject(object, key, value) {
 //////////////////////////////////////////////////////////////////////
 
 function removeProperties(object, array) {
+  array.forEach(array => delete object[array]);
 
 }
 
@@ -141,31 +199,43 @@ function removeProperties(object, array) {
 //////////////////////////////////////////////////////////////////////
 
 function dedup(array) {
+  let oneArray = []; 
 
+  for (let i = 0; i < array.length; i++) { 
+    const names = array[i];
 
+    if (!oneArray.includes(names)) {
+      oneArray.push(names);
+    }
+  }
+
+  return oneArray; 
 }
+
+
+
 
 //////////////////////////////////////////////////////////////////////
 // DON'T REMOVE THIS CODE ////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////
 
-if((typeof process !== 'undefined') &&
-   (typeof process.versions.node !== 'undefined')) {
-    // here, export any references you need for tests //
-    module.exports.objectValues = objectValues;
-    module.exports.keysToString = keysToString;
-    module.exports.valuesToString = valuesToString;
-    module.exports.arrayOrObject = arrayOrObject;
-    module.exports.capitalizeWord = capitalizeWord;
-    module.exports.capitalizeAllWords = capitalizeAllWords;
-    module.exports.welcomeMessage = welcomeMessage;
-    module.exports.profileInfo = profileInfo;
-    module.exports.maybeNoises = maybeNoises;
-    module.exports.hasWord = hasWord;
-    module.exports.addFriend = addFriend;
-    module.exports.isFriend = isFriend;
-    module.exports.nonFriends = nonFriends;
-    module.exports.updateObject = updateObject;
-    module.exports.removeProperties = removeProperties;
-    module.exports.dedup = dedup;
+if ((typeof process !== 'undefined') &&
+  (typeof process.versions.node !== 'undefined')) {
+  // here, export any references you need for tests //
+  module.exports.objectValues = objectValues;
+  module.exports.keysToString = keysToString;
+  module.exports.valuesToString = valuesToString;
+  module.exports.arrayOrObject = arrayOrObject;
+  module.exports.capitalizeWord = capitalizeWord;
+  module.exports.capitalizeAllWords = capitalizeAllWords;
+  module.exports.welcomeMessage = welcomeMessage;
+  module.exports.profileInfo = profileInfo;
+  module.exports.maybeNoises = maybeNoises;
+  module.exports.hasWord = hasWord;
+  module.exports.addFriend = addFriend;
+  module.exports.isFriend = isFriend;
+  module.exports.nonFriends = nonFriends;
+  module.exports.updateObject = updateObject;
+  module.exports.removeProperties = removeProperties;
+  module.exports.dedup = dedup;
 }
