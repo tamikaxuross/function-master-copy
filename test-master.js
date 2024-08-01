@@ -12,15 +12,15 @@
   
     QUnit.test("Functions can access/modify variables in parent scope.", function(assert){
       var outside_the_function = null; //global variable
-
+    
       function yay(){//function scoped
         var inside_the_function = "can you see me?";
         outside_the_function = inside_the_function; 
       }
-  
+    
       yay();
-  
-      assert.equal(outside_the_function, "can you see me");
+    
+      assert.equal(outside_the_function, "can you see me?");
     });
   
     QUnit.test("Function Parameters become scoped to the function.", function(assert){
@@ -63,7 +63,7 @@
           in_foo = this.from_yay;
         }
         assert.equal(in_foo, "i'm in foo");
-        assert.equal(this.from_yay, "i'm inside yay");
+        assert.equal(this.from_yay, undefined);
       }
       yay();
       foo();
@@ -80,7 +80,7 @@
       }
       yay();
   
-      assert.equal(peanuts, "roasted");
+      assert.equal(peanuts, 300);
     });
   
     QUnit.test("Variables created with var in a funtion are re-created each time", function(assert){
